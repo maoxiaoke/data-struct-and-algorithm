@@ -1,0 +1,16 @@
+{
+  "name": "data-struct",
+  "version": "1.0.0",
+  "description": "",
+  "main": "two-tree.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest --run"
+  },
+  "author": "maoxiaoke",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.7.3",
+    "vitest": "^0.15.1"
+  }
+}
