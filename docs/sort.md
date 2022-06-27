@@ -8,5 +8,16 @@
 
 ![](../images/bubble-sort.gif)
 
+冒泡排序的时间复杂度为 O(n²)。
 
-## 
+## 选择排序
+
+选择排序（Selection Sort）是 “不断在待排序的数据中寻找最小值” 的排序手段。
+
+![](../images/selection-sort.gif)
+
+选择排序和冒泡排序的时间复杂度一样，为 O(n²)。
+
+## 快速排序
+
+
