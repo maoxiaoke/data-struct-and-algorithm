@@ -34,3 +34,4 @@ JavaScript 中，Array 对象可以非常方便地实现栈的功能。通常，
 [队列 Queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)) 也是一种 **运算受限** 的列表，其规则是 FIFO（first-in-first-out, 先入先出）。
 
 在 JavaScript 中，利用 Array 对象以及对象的 `push` 和 `shift` 两个方法可以方便地实现一个队列的功能。
+
