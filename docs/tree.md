@@ -83,7 +83,7 @@ class BinaryTree<T> {
 
 ## 插入二叉树
 
-将一个元素插入二叉树存在多种策略，这里介绍一种特殊的二叉树：二叉查找树（Binary Search Tree）。它是一棵空树，或者具有一下性质：若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；它的左、右子树也分别为二叉排序树。
+将一个元素插入二叉树存在多种策略，这里介绍一种特殊的二叉树：二叉查找树（Binary Search Tree）。它是一棵空树，或者具有一下性质：若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；它的左、右子树也分别为二叉排序树。二叉搜索树的这一特性，使得数据查找的效率相当高。
 
 下图展示了搜索二叉树插入 [23,16,45,3,22,37,99] 的过程：
 
@@ -134,6 +134,15 @@ class BSTree {
 }
 ```
 
+这样，我们就可以将 [23,16,45,3,22,37,99] 插入到二叉树中了：
+
+```typescript
+const bstTree = new BSTree();
+[23,16,45,3,22,37,99].forEach(num => {
+  bstTree.insert(num);
+})
+```
+
 ## 遍历二叉树
 
 二叉树的遍历方式，主要分为深度优先遍历和广度优先遍历。其中深度优先遍历，按照**访问根节点**的顺序，分为先序遍历、中序遍历和后序遍历，通常使用递归来实现；广度优先遍历，又称为层序遍历，通常使用队列来实现。
@@ -144,11 +153,33 @@ class BSTree {
 
 ![](../images/dfs-preorder.png)
 
+```typescript
+function preOrder<T> (node: BinaryTreeNode<T>, arr = T[]) {
+  if (node !== null) {
+    arr.push(node.data)
+    this.preOrder(node.left, arr);
+    this.preOrder(node.right, arr);
+  }
+  return arr;
+}
+```
+
 2. **中序遍历**
 
 先遍历左子树，然后访问根节点，最后遍历右子树。下图二叉树的中序遍历结果为：[3,16,22,23,37,45,99]。
 
 ![](../images/dfs-inorder.png)
+
+```typescript
+function inOrder<T> (node: BinaryTreeNode<T>, arr = T[]) {
+  if (node !== null) {
+    this.inOrder(node.left, arr);
+    arr.push(node.data);
+    this.inOrder(node.right, arr);
+  }
+  return arr;
+}
+```
 
 3. **后序遍历**
 
@@ -156,9 +187,38 @@ class BSTree {
 
 ![](../images/dfs-postorder.png)
 
+```typescript
+function postOrder<T> (node: BinaryTreeNode<T>, arr = T[]) {
+  if (node !== null) {
+    this.postOrder(node.left, arr);
+    this.postOrder(node.right, arr);
+    arr.push(node.data);
+  }
+
+  return arr;
+}
+```
+
 4. **层序遍历**
 
+按照节点的层来进行遍历，首先从第一层开始访问，从上而下逐层遍历，在同一层，按照从左到右的顺序对节点逐个访问。下图二叉树的层序遍历结果为：[23,16,45,3,22,37,99]。
 
-## 二叉搜索树
+![](../images/binary-tree-bfs.png)
 
-二叉查找树（Binary Search Tree）是一种特殊的二叉树，相对较小的值保存在左节点，较大的值保存在右节点。这一特性，使得数据查找的效率相当高。
+层序遍历通常可以使用队列来实现。
+
+```typescript
+function bfs<T> (node: BinaryTreeNode<T>) {
+  const queue = [node];
+  const arr = [];
+
+  while(queue.length) {
+    const { left, right, data } = queue.shift();
+    arr.push(data)
+    left && queue.push(left);
+    right && queue.push(right);
+  }
+
+  return arr;
+}
+```
