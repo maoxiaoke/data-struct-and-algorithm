@@ -28,9 +28,111 @@
 
 「二叉树」的每个节点最多含有两个子树，分支通常称为左子树和右子树。
 
-## 二叉树
+## 树的 ADT 描述
 
+我们给出树的一些基本和常用操作：
 
+```text
+ADT tree
+Data
+  由一个根节点和若干子树组成。
+Operation
+  constructor(): 构造一棵空树
+  insert(): 插入一个节点
+  root(): 返回根节点
+  traverse(): 遍历整棵树
+```
+
+## 二叉树的定义
+
+二叉树的每个节点最多有两颗子树，所以二叉树不存在度大于 2 的节点。如下图，所有节点的度都不超过 2，所以是一棵标准的二叉树。
+
+![](../images/binary-search-tree.png)
+
+### 二叉树的节点定义
+
+树的节点一个元素，以及若干个指向子树的分支；而二叉树最多只有左子树和右子树。因此可以定义出二叉树的节点：
+
+```typescript
+class BinaryTreeNode<T> {
+  public data: T;
+  public left: BinaryTreeNode<T> | null;
+  public right: BinaryTreeNode<T> | null;
+
+  constructor (data: T, left?: BinaryTreeNode<T>, right?: BinaryTreeNode<T>) {
+    this.data = data;
+    this.left = left ?? null;
+    this.right = right ?? null;
+  }
+}
+```
+
+实现一个 BinaryTreeNode 类来定义二叉树的节点，其中 `data` 存放数据或元素（也称数据域），`left` 和 `right` 分别指向左子树和右子树（也称指针域）。
+
+### 二叉树的定义
+
+有了节点的定义，继续定义一个 BinaryTree 类来定义一个二叉树。
+
+```typescript
+class BinaryTree<T> {
+  #root: BinaryTreeNode<T> = null; // 默认为空树
+}
+```
+
+对于树来说，我们可以从根节点遍历到所有的子树，因此只需定义一个内部根节点，默认为空树。
+
+## 插入二叉树
+
+将一个元素插入二叉树存在多种策略，这里介绍一种特殊的二叉树：二叉查找树（Binary Search Tree）。它是一棵空树，或者具有一下性质：若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；它的左、右子树也分别为二叉排序树。
+
+下图展示了搜索二叉树插入 [23,16,45,3,22,37,99] 的过程：
+
+![](../images/BST-creation.gif)
+
+其算法描述如下：
+
+1. 设根节点为当前节点。
+2. 若待插入的节点保存的数据小于当前节点，则设新的当前节点为原节点左节点；反之，设当前节点为原节点的右节点。
+3. 如果当前节点的左节点为 null（或右节点为 null），就将新的节点插入这个位置。
+
+代码实现如下：
+
+```typescript
+class BSTree {
+  #root: BinaryTreeNode<number> = null; // 默认为空树
+
+  public insert (data: number) {
+    const node = new BinaryTreeNode(data);
+
+    // 没有根节点，设置为当前根节点
+    if (this.#root === null) {
+      this.#root = node;
+    } else {
+      let current = this.#root;
+      let parent = null;
+      while (true) {
+        parent = current;
+
+        if (data < current.data) {
+          current = current.left;
+
+          if (current === null) {
+            parent.left = node;
+            break;
+          }
+        } else {
+          current = current.right;
+
+          if (current === null) {
+            parent.right = node;
+            break;
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 ## 遍历二叉树
 

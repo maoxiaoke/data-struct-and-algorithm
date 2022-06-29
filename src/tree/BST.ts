@@ -4,28 +4,24 @@
  */
 
 // 定义二叉树的节点结构
-class TreeNode<T> {
-  #data: T | null;
-  public left: TreeNode<T> | null;
-  public right: TreeNode<T> | null;
+class BinaryTreeNode<T> {
+  public data: T;
+  public left: BinaryTreeNode<T> | null;
+  public right: BinaryTreeNode<T> | null;
 
-  constructor (data: T, left?: TreeNode<T>, right?: TreeNode<T>) {
-    this.#data = data;
+  constructor (data: T, left?: BinaryTreeNode<T>, right?: BinaryTreeNode<T>) {
+    this.data = data;
     this.left = left ?? null;
     this.right = right ?? null;
-  }
-
-  get data () {
-    return this.#data;
   }
 }
 
 // 定义二叉查找树
 export class BSTree {
-  #root: TreeNode<number> = null;
+  #root: BinaryTreeNode<number> = null;
 
   insert (data: number) {
-    const node = new TreeNode(data);
+    const node = new BinaryTreeNode(data);
 
     // 1. 没有根节点，设置为当前根节点
     if (this.#root === null) {
